@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GVAMAX - CRM con IA para Inmobiliarias de Alto Rendimiento</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AlpineJS for interactivity (FAQ) -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Usamos la fuente Inter para todo el cuerpo del documento */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Estilo para un fondo profesional oscuro */
+        .dark-bg {
+            background-color: #111827; /* gray-900 */
+        }
+        /* Estilos para el modal de video */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #1f2937;
+            margin: auto;
+            padding: 20px;
+            border-radius: 0.75rem;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .faq-question.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+         .carousel-container {
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="dark-bg text-gray-300 antialiased">
+
+     <header id="header" class="bg-dark/80 backdrop-blur-lg shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-slate-900">
+                <img src="cropped-logo-GVA-MAX-blanco-150x50.png" alt="GVAMAX" class="h-8 w-auto inline-block">
+            </a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#problema" class="text-white-600 hover:text-orange-600 transition-colors">El Problema</a>
+                <a href="#solucion" class="text-white-600 hover:text-orange-600 transition-colors">La Solución</a>
+                <a href="#como-funciona" class="text-white-600 hover:text-orange-600 transition-colors">Cómo Funciona</a>
+                <a href="#faq" class="text-white-600 hover:text-orange-600 transition-colors">Preguntas Frecuentes</a>
+            </div>
+            <a href="#cta-final" class="bg-orange-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-700 transition-transform transform hover:scale-105 shadow-md">Solicitar Demo</a>
+        </nav>
+    </header>
+    <main>
+    <!-- 1. Sección "Hero" -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center">
+        <div class="w-full max-w-5xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                Optimice la Gestión de leads y <span class="text-orange-500">Maximice sus Cierres</span> con IA Inmobiliaria
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-3xl mx-auto">
+                Nuestro asistente con IA responde, califica y organiza tus leads 24/7, para que tu equipo se enfoque únicamente en cerrar negocios.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                <a href="#demo" class="w-full md:w-auto bg-orange-500 text-white font-bold text-lg py-4 px-8 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-300 transform hover:scale-105 transition-transform duration-200 ease-in-out">
+                    Solicita una Demo Gratuita Ahora
+                </a>
+                <button id="openModalBtn" class="w-full md:w-auto bg-gray-700 text-white font-bold text-lg py-4 px-8 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 transform hover:scale-105 transition-transform duration-200 ease-in-out flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Ver respuesta en 5 seg.
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Sección de Prueba Social / Autoridad -->
+    <section class="py-12 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h3 class="text-lg font-semibold text-white-400 mb-6 pb-5">INTEGRADO CON LOS PORTALES Y REDES QUE YA USAS</h3>
+            <div class="flex justify-center items-center gap-8 md:gap-12 mb-6 flex-wrap">                
+                <img src="logo-zonaprop-gris.png" alt="zonaprop" class="h-10 opacity-60 grayscale"/>                
+                <img src="logo-argenprop-gris.png" alt="Argenprop" class="h-10 opacity-60 grayscale"/>
+                <img src="logo-meli-gris.png" alt="Mercadolibre" class="h-8 opacity-60 grayscale"/>
+                <img src="logo-clasificados-gris.png" alt="Clasificados la voz" class="h-10 opacity-60 grayscale"/>
+            </div>
+            <div class="flex justify-center items-center gap-8 md:gap-12 mb-6 flex-wrap">                
+                <img src="logo-zonaprop-gris.png" alt="zonaprop" class="h-10 opacity-60 grayscale"/>                
+                <img src="logo-argenprop-gris.png" alt="Argenprop" class="h-10 opacity-60 grayscale"/>
+                <img src="logo-meli-gris.png" alt="Mercadolibre" class="h-8 opacity-60 grayscale"/>
+                <img src="logo-clasificados-gris.png" alt="Clasificados la voz" class="h-10 opacity-60 grayscale"/>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Sección del Problema (Agitar el Dolor) -->
+    <!-- <section id="problema" class="py-20 md:py-28">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">¿Te suena familiar?</h2>
+            <p class="text-lg text-gray-400 mb-8">Un lead te escribe a las 2 AM por una propiedad y cuando respondes, ya contactó a otra agencia. Tu equipo invierte horas respondiendo las mismas preguntas una y otra vez, en lugar de vender.</p>
+            <div class="bg-orange-500/10 border border-orange-500 text-orange-300 rounded-lg p-6 max-w-2xl mx-auto">
+                <p class="text-xl font-bold">"El 90% de los clientes busca respuestas inmediatas. Si no las encuentran, se van a la competencia."</p>
+            </div>
+        </div>
+    </section> -->
+
+    <section id="problema" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-orange-500 mb-4">¿Tu día a día se ve así?</h2>
+                    <p class="text-slate-300 mb-12">Estos son los desafíos que enfrentan los profesionales inmobiliarios todos los días. Si te sientes identificado, no estás solo.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-slate-700 p-6 rounded-lg shadow-md border border-orange-200">
+                        <h3 class="font-bold text-xl text-orange-500 text-center mb-2">Agente Unipersonal</h3>
+                        <p class="text-slate-300 italic text-center">"¿Pierdes consultas mientras muestras una propiedad o estás en una reunión?"</p>
+                    </div>
+                    <div class="bg-slate-700 p-6 rounded-lg shadow-md border border-orange-200">
+                        <h3 class="font-bold text-xl text-orange-500 text-center mb-2">Gerente de Inmobiliaria PYME</h3>
+                        <p class="text-slate-300 italic text-center">"¿El caos de múltiples números de WhatsApp hace que los leads se respondan dos veces o, peor aún, nunca?"</p>
+                    </div>
+                    <div class="bg-slate-700 p-6 rounded-lg shadow-md border border-orange-200">
+                        <h3 class="font-bold text-xl text-orange-500 text-center mb-2">Director de Gran Corporación</h3>
+                        <p class="text-slate-300 italic text-center">"¿Sientes que es imposible escalar la atención sin que la calidad y el control se desplomen?"</p>
+                    </div>
+                </div>
+                <div class="mt-12 bg-orange-100 border-l-4 border-amber-500 text-orange-800 p-6 rounded-lg max-w-4xl mx-auto shadow-lg">
+                    <p class="text-2xl font-semibold text-center">"El 90% de los clientes inmobiliarios busca respuestas inmediatas. Si no las encuentran en segundos, se van a la competencia."</p>
+                </div>
+            </div>
+        </section>
+    
+    <!-- 4. Sección de la Solución (Beneficios Clave) -->
+    <section id="solucion" class="py-20 md:py-28 bg-gray-800">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">Presentamos la Solución Definitiva para tu Inmobiliaria</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <!-- Beneficio 1 -->
+                <div class="flex flex-col items-center p-8 bg-slate-700 rounded-lg">
+                    <svg class="w-12 h-12 text-orange-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <h3 class="font-bold text-2xl text-white mb-2">Nunca más pierdas una oportunidad</h3>
+                    <p class="text-gray-400">Atención 24/7 y respuestas instantáneas por WhatsApp. Cada consulta es atendida, sin importar la hora o el día. Transforma el interés nocturno en una visita agendada para la mañana siguiente.</p>
+                </div>
+                <!-- Beneficio 2 -->
+                <div class="flex flex-col items-center p-8 bg-slate-700 rounded-lg">
+                    <svg class="w-12 h-12 text-orange-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.572a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" /></svg>
+                    <h3 class="font-bold text-2xl text-white mb-2">Recibe leads listos para convertir</h3>
+                    <p class="text-gray-400">Nuestra IA conversa, califica y filtra a cada prospecto. Tu equipo comercial ahorra tiempo valioso al recibir únicamente clientes con alta intención de compra o alquiler, listos para ser contactados.</p>
+                </div>
+                <!-- Beneficio 3 -->
+                <div class="flex flex-col items-center p-8 bg-slate-700 rounded-lg">
+                    <svg class="w-12 h-12 text-orange-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h12M3.75 3h16.5M3.75 3v16.5M13.5 5.25h3.75m-3.75 3h3.75M13.5 11.25h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg>
+                    <h3 class="font-bold text-2xl text-white mb-2">Escala tu negocio, no tus costos</h3>
+                    <p class="text-gray-400">Centraliza la comunicación de portales, redes y tu web en un único CRM. Gestiona cientos de consultas diarias sin contratar más personal y proyecta una imagen profesional y organizada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Sección "¿Cómo Funciona?" -->
+    <section id="como-funciona" class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-16">Simple, Rápido y Potente</h2>
+            <div class="grid md:grid-cols-4 gap-8 text-left">
+                <!-- Paso 1 -->
+                <div class="text-center"><div class="text-orange-500 font-bold text-4xl mb-2">1.</div><h3 class="text-xl font-bold text-white mb-2">Consulta</h3><p class="text-gray-400">El cliente escribe desde cualquier canal: portal, red social o tu web.</p></div>
+                <!-- Paso 2 -->
+                <div class="text-center"><div class="text-orange-500 font-bold text-4xl mb-2">2.</div><h3 class="text-xl font-bold text-white mb-2">Respuesta IA</h3><p class="text-gray-400">El asistente responde al instante con la información solicitada.</p></div>
+                <!-- Paso 3 -->
+                <div class="text-center"><div class="text-orange-500 font-bold text-4xl mb-2">3.</div><h3 class="text-xl font-bold text-white mb-2">Calificación</h3><p class="text-gray-400">La IA conversa, filtra y detecta el interés real del prospecto.</p></div>
+                <!-- Paso 4 -->
+                <div class="text-center"><div class="text-orange-500 font-bold text-4xl mb-2">4.</div><h3 class="text-xl font-bold text-white mb-2">Guardado en CRM</h3><p class="text-gray-400">El lead calificado llega a GVAMAX, listo para que tu asesor lo contacte.</p></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 6. Sección de Comparativa / ROI -->
+    <section class="py-20 md:py-28 bg-gray-800">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">La Decisión más Rentable para tu Negocio</h2>
+            <div class="grid md:grid-cols-2 gap-px bg-gray-700 rounded-lg overflow-hidden ">
+                <div class="bg-gray-900 p-6"><h3 class="text-xl font-bold text-orange-400 mb-4">Asistente con IA GVAMAX</h3><ul class="space-y-2 text-gray-300"><li>✓ Disponible 24/7</li><li>✓ Responde en segundos</li><li>✓ Atiende múltiples clientes a la vez</li><li>✓ Sin errores humanos</li><li>✓ Todo registrado en el CRM</li></ul></div>
+                <div class="bg-gray-700 p-6"><h3 class="text-xl font-bold text-white mb-4">Asesor Humano (sin IA)</h3><ul class="space-y-2 text-gray-400"><li>✗ Necesita dormir y descansar</li><li>✗ Responde según carga de trabajo</li><li>✗ 1 consulta a la vez</li><li>✗ Riesgo de olvidos y errores</li><li>✗ Información dispersa</li></ul></div>
+            </div>
+            <p class="text-center text-lg italic text-white mt-8 mb-1">Cualquiera de nuestros planes es más rentable que pagar un sueldo completo. 
+            </p>
+            <h3 class="text-3xl text-orange-400 text-center">La IA no reemplaza a tu equipo:</h3> 
+            <h2 class="text-3xl text-orange-400 text-center mb-10">LO POTENCIA.</h2>
+            <div class="chart-container bg-gray-800 p-4 rounded-lg">
+                <canvas id="roiChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Sección de Casos de Éxito y Testimonios -->
+    <section class="py-20 md:py-28">
+        <div class="w-full max-w-4xl mx-auto mb-20 md:mb-32 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-12">Lo que dicen nuestros partners estratégicos</h2>
+            <div class="relative overflow-hidden bg-gray-800 p-8 rounded-xl border border-gray-700">
+                <div id="carousel" class="flex carousel-container">
+                    <!-- Testimonio 1 -->
+                    <div class="w-full flex-shrink-0 px-8 text-center">
+                        <p class="text-lg text-gray-300 italic mb-4">"Desde que implementamos GVAMAX, nuestra tasa de respuesta mejoró en un 300% y los leads que llegan al equipo comercial son de una calidad muy superior. Es una herramienta indispensable."</p>
+                        <p class="font-bold text-white">Carlos Rodriguez</p>
+                        <p class="text-sm text-orange-400">Director Comercial, InmoCapital</p>
+                    </div>
+                    <!-- Testimonio 2 -->
+                    <div class="w-full flex-shrink-0 px-8 text-center">
+                        <p class="text-lg text-gray-300 italic mb-4">"La capacidad de filtrar y calificar prospectos automáticamente nos ha ahorrado incontables horas. Ahora nos enfocamos en lo que realmente importa: cerrar ventas."</p>
+                        <p class="font-bold text-white">Laura Fernandez</p>
+                        <p class="text-sm text-orange-400">Gerente de Ventas, Propiedades Premium</p>
+                    </div>
+                    <!-- Testimonio 3 -->
+                    <div class="w-full flex-shrink-0 px-8 text-center">
+                        <p class="text-lg text-gray-300 italic mb-4">"Centralizar la comunicación ha sido un cambio radical. Proyectamos una imagen mucho más profesional y organizada, y la gestión de consultas es infinitamente más eficiente."</p>
+                        <p class="font-bold text-white">Martín Gonzalez</p>
+                        <p class="text-sm text-orange-400">CEO, Metrópolis Bienes Raíces</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Sección de Preguntas Frecuentes (FAQ) -->
+    <section  id="faq" class="py-20 md:py-28 bg-gray-800" x-data="{ open: null }">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">Resolvemos tus Dudas</h2>
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="bg-gray-900 rounded-lg"><button @click="open = open === 1 ? null : 1" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿Es muy caro?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 1}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 1" x-collapse class="px-6 pb-6 text-gray-400"><p>El costo de oportunidad de perder un solo cliente calificado por no responder a tiempo suele ser mayor que la inversión mensual en GVAMAX. Nuestro ROI es inmediato: más leads capturados y más tiempo para tu equipo se traducen directamente en más ventas.</p></div></div>
+                <!-- FAQ 2 -->
+                <div class="bg-gray-900 rounded-lg"><button @click="open = open === 2 ? null : 2" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿La implementación es complicada?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 2}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 2" x-collapse class="px-6 pb-6 text-gray-400"><p>Para nada. Nuestro equipo se encarga de todo. La activación se realiza en menos de 48 horas y te ofrecemos 10 días de acompañamiento personalizado para el entrenamiento de la IA y la capacitación de tu equipo. Estarás operativo en tiempo récord.</p></div></div>
+                <!-- FAQ 3 -->
+                <div class="bg-gray-900 rounded-lg"><button @click="open = open === 3 ? null : 3" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿En qué se diferencia de un chatbot genérico?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 3}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 3" x-collapse class="px-6 pb-6 text-gray-400"><p>GVAMAX es el único CRM inmobiliario con integración nativa de IA conversacional y WhatsApp. No es un 'parche' ni una herramienta externa. Fue creado desde cero por y para el sector inmobiliario, entendiendo sus procesos, terminología y necesidades únicas.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Sección de Llamada a la Acción Final (CTA Final) -->
+    <section id="demo" class="py-20 md:py-28">
+        <div class="bg-gray-800 p-8 md:p-12 rounded-xl border border-gray-700 max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">¿Quieres ser la inmobiliaria que siempre va un paso adelante?</h2>
+            <p class="text-lg text-gray-400 mb-8">No dejes que tu competencia se quede con tus clientes. Descubre en 15 minutos cómo GVAMAX puede transformar tu negocio.</p>
+            <form action="#" method="POST" class="space-y-4 max-w-2xl mx-auto">
+                <input type="text" name="nombre" placeholder="Nombre Completo" required class="w-full px-4 py-3 rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200 ease-in-out" />
+                <input type="email" name="email" placeholder="Email Corporativo" required class="w-full px-4 py-3 rounded-md border-gray-600 bg-gray-700 text-white focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition duration-200 ease-in-out" />
+                <button type="submit" class="w-full bg-orange-500 text-white font-bold text-lg py-4 px-6 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-4 focus:ring-orange-300 transform hover:scale-105 transition-transform duration-200 ease-in-out">
+                    Solicita tu Demo Gratuita
+                </button>
+            </form>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 border-t border-gray-800">
+        <p class="text-gray-500">&copy; 2025 GVAMAX. Todos los derechos reservados.</p>
+        <a href="#" class="text-sm text-gray-600 hover:text-orange-500">Política de Privacidad</a>
+    </footer>
+
+    <!-- Modal para el Video -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="video-container">
+                <iframe id="youtubeVideo" width="100%" height="auto" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Lógica del modal de video
+        const videoModal = document.getElementById('videoModal');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeButton = document.querySelector('.close-button');
+        const youtubeVideo = document.getElementById('youtubeVideo');
+        const videoId = 'BYg23wBBTSY'; // ID del video de YouTube
+
+        openModalBtn.onclick = function() {
+            videoModal.style.display = 'flex';
+            youtubeVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        }
+
+        closeButton.onclick = function() {
+            videoModal.style.display = 'none';
+            youtubeVideo.src = '';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == videoModal) {
+                videoModal.style.display = 'none';
+                youtubeVideo.src = '';
+            }
+        }
+
+        const roiCtx = document.getElementById('roiChart').getContext('2d');
+    const roiChart = new Chart(roiCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Asesor Humano (Administrativo)', 'Plan GVAMAX + IA'],
+            datasets: [{
+                label: 'Costo Mensual Estimado (USD)',
+                data: [750, 250],
+                backgroundColor: [
+                    'rgba(239, 68, 68, 0.6)',
+                    'rgba(59, 130, 246, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(239, 68, 68, 1)',
+                    'rgba(59, 130, 246, 1)'
+                ],
+                borderWidth: 0.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Comparativa de Costo Mensual' },
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true, ticks: { callback: value => '$' + value } }
+            }
+        }
+        });
+
+          // Lógica del carrusel de testimonios
+        const carousel = document.getElementById('carousel');
+        let currentIndex = 0;
+        const slides = carousel.children.length;
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides;
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }, 5000); // Cambia de testimonio cada 5 segundos
+        
+    </script>
+</body>
+</html>
+
