@@ -13,95 +13,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Usamos la fuente Inter para todo el cuerpo del documento */
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        /* Estilo para un fondo profesional oscuro */
-        .dark-bg {
-            background-color: #111827; /* gray-900 */
-        }
-        /* Estilos para el modal de video */
-        .modal {
-            display: none; 
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #1f2937;
-            margin: auto;
-            padding: 20px;
-            border-radius: 0.75rem;
-            width: 90%;
-            max-width: 800px;
-            position: relative;
-        }
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
-            height: 0;
-            overflow: hidden;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .faq-question.active .faq-arrow {
-            transform: rotate(180deg);
-        }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out;
-        }
-         .carousel-container {
-            transition: transform 0.5s ease-in-out;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-bg text-gray-300 antialiased">
 
      <header id="header" class="bg-dark/80 backdrop-blur-lg shadow-sm sticky top-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-slate-900">
-                <img src="cropped-logo-GVA-MAX-blanco-150x50.png" alt="GVAMAX" class="h-8 w-auto inline-block">
+                <img src="/src/Imagenes/cropped-logo-GVA-MAX-blanco-150x50.png" alt="GVAMAX" class="h-8 w-auto inline-block">
             </a>
             <div class="hidden md:flex items-center space-x-6">
                 <a href="#problema" class="text-white-600 hover:text-orange-600 transition-colors">El Problema</a>
@@ -139,16 +58,16 @@
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h3 class="text-lg font-semibold text-white-400 mb-6 pb-5">INTEGRADO CON LOS PORTALES Y REDES QUE YA USAS</h3>
             <div class="flex justify-center items-center gap-8 md:gap-12 mb-6 flex-wrap">                
-                <img src="logo-zonaprop-gris.png" alt="zonaprop" class="h-10 opacity-60 grayscale"/>                
-                <img src="logo-argenprop-gris.png" alt="Argenprop" class="h-10 opacity-60 grayscale"/>
-                <img src="logo-meli-gris.png" alt="Mercadolibre" class="h-8 opacity-60 grayscale"/>
-                <img src="logo-clasificados-gris.png" alt="Clasificados la voz" class="h-10 opacity-60 grayscale"/>
+                <img src="/src/Imagenes/logo-zonaprop-gris.png" alt="zonaprop" class="h-10 opacity-60 grayscale"/>                
+                <img src="/src/Imagenes/logo-argenprop-gris.png" alt="Argenprop" class="h-10 opacity-60 grayscale"/>
+                <img src="/src/Imagenes/logo-meli-gris.png" alt="Mercadolibre" class="h-8 opacity-60 grayscale"/>
+                <img src="/src/Imagenes/logo-clasificados-gris.png" alt="Clasificados la voz" class="h-10 opacity-60 grayscale"/>
             </div>
             <div class="flex justify-center items-center gap-8 md:gap-12 mb-6 flex-wrap">                
-                <img src="logo-zonaprop-gris.png" alt="zonaprop" class="h-10 opacity-60 grayscale"/>                
-                <img src="logo-argenprop-gris.png" alt="Argenprop" class="h-10 opacity-60 grayscale"/>
-                <img src="logo-meli-gris.png" alt="Mercadolibre" class="h-8 opacity-60 grayscale"/>
-                <img src="logo-clasificados-gris.png" alt="Clasificados la voz" class="h-10 opacity-60 grayscale"/>
+                <img src="/src/Imagenes/logo-zonaprop-gris.png" alt="zonaprop" class="h-10 opacity-60 grayscale"/>                
+                <img src="/src/Imagenes/logo-argenprop-gris.png" alt="Argenprop" class="h-10 opacity-60 grayscale"/>
+                <img src="/src/Imagenes/logo-meli-gris.png" alt="Mercadolibre" class="h-8 opacity-60 grayscale"/>
+                <img src="/src/Imagenes/logo-clasificados-gris.png" alt="Clasificados la voz" class="h-10 opacity-60 grayscale"/>
             </div>
         </div>
     </section>
