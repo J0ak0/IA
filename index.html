@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/src/assets/style.css">
 </head>
 <body class="dark-bg text-gray-300 antialiased">
 
@@ -209,7 +209,7 @@
                     <!-- FAQ 3 -->
                     <div class="bg-gray-900 rounded-lg"><button @click="open = open === 3 ? null : 3" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿En qué se diferencia de un chatbot genérico?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 3}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 3" x-collapse class="px-6 pb-6 text-gray-400"><p>GVAMAX es el único CRM inmobiliario con integración nativa de IA conversacional y WhatsApp. No es un 'parche' ni una herramienta externa. Fue creado desde cero por y para el sector inmobiliario, entendiendo sus procesos, terminología y necesidades únicas.</p></div></div>
                     <!-- FAQ 4 -->
-                    <div class="bg-gray-900 rounded-lg"><button @click="open = open === 4 ? null : 4" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿La IA puede entender el lenguaje informal o los audios de WhatsApp?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 4}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 4" x-collapse class="px-6 pb-6 text-gray-400"><p> Sí. Nuestra IA está entrenada para interpretar el lenguaje natural, incluyendo modismos, abreviaturas e incluso errores de tipeo comunes en WhatsApp. La transcripción y análisis de audios es una de nuestras funcionalidades más potentes, asegurando que no se pierda ninguna consulta..</p></div></div>
+                    <div class="bg-gray-900 rounded-lg"><button @click="open = open === 4 ? null : 4" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿La IA puede entender el lenguaje informal o los audios de WhatsApp?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 4}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 4" x-collapse class="px-6 pb-6 text-gray-400"><p> Sí. Nuestra IA está entrenada para interpretar el lenguaje natural, incluyendo modismos, abreviaturas e incluso errores de tipeo comunes en WhatsApp. La transcripción y análisis de audios es una de nuestras funcionalidades más potentes, asegurando que no se pierda ninguna consulta.</p></div></div>
                     <!-- FAQ 5 -->
                     <div class="bg-gray-900 rounded-lg"><button @click="open = open === 5 ? null : 5" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿Puedo personalizar las respuestas del asistente de IA?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 5}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 5" x-collapse class="px-6 pb-6 text-gray-400"><p>¡Totalmente! Durante la implementación, configuramos la IA con la información de tus propiedades, horarios y procesos. Además, te enseñamos cómo ajustar y "entrenar" a tu asistente para que su tono y respuestas se alineen perfectamente con la voz de tu marca.</p></div></div>
                     <!-- FAQ 6 -->
@@ -260,11 +260,11 @@
         const openModalBtn = document.getElementById('openModalBtn');
         const closeButton = document.querySelector('.close-button');
         const youtubeVideo = document.getElementById('youtubeVideo');
-        const videoId = 'BYg23wBBTSY'; // ID del video de YouTube
+        const videoId = 'LKAgowcrCJ8'; // ID del video de YouTube
 
         openModalBtn.onclick = function() {
             videoModal.style.display = 'flex';
-            youtubeVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            youtubeVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&controls=0`;
         }
 
         closeButton.onclick = function() {
