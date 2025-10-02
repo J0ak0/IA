@@ -15,79 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Usamos la fuente Inter para todo el cuerpo del documento */
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        /* Estilo para un fondo profesional oscuro */
-        .dark-bg {
-            background-color: #111827; /* gray-900 */
-        }
-        /* Estilos para el modal de video */
-        .modal {
-            display: none; 
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #1f2937;
-            margin: auto;
-            padding: 20px;
-            border-radius: 0.75rem;
-            width: 90%;
-            max-width: 800px;
-            position: relative;
-        }
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
-            height: 0;
-            overflow: hidden;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-        .carousel-container {
-            transition: transform 0.5s ease-in-out;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-bg text-gray-300 antialiased">
 
@@ -123,7 +51,7 @@
                     </a>
                     <button id="openModalBtn" class="w-full md:w-auto bg-gray-700 text-white font-bold text-lg py-4 px-8 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 transform hover:scale-105 transition-transform duration-200 ease-in-out flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        Ver respuesta en 5 seg.
+                        Queres conocer más?
                     </button>
                 </div>
             </div>
@@ -269,7 +197,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-12">Resolvemos tus Dudas</h2>
                 <div class="space-y-4">
                     <!-- FAQ 1 -->
-                    <div class="bg-gray-900 rounded-lg"><button @click="open = open === 1 ? null : 1" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿Es muy caro?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 1}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 1" x-collapse class="px-6 pb-6 text-gray-400"><p>El costo de oportunidad de perder un solo cliente calificado por no responder a tiempo suele ser mayor que la inversión mensual en GVAMAX. Nuestro ROI es inmediato: más leads capturados y más tiempo para tu equipo se traducen directamente en más ventas.</p></div></div>
+                    <div class="bg-gray-900 rounded-lg"><button @click="open = open === 1 ? null : 1" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿Es muy caro?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 1}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 1" x-collapse.duration.1700ms class="px-6 pb-6 text-gray-400"><p>El costo de oportunidad de perder un solo cliente calificado por no responder a tiempo suele ser mayor que la inversión mensual en GVAMAX. Nuestro ROI es inmediato: más leads capturados y más tiempo para tu equipo se traducen directamente en más ventas.</p></div></div>
                     <!-- FAQ 2 -->
                     <div class="bg-gray-900 rounded-lg"><button @click="open = open === 2 ? null : 2" class="w-full text-left p-6 flex justify-between items-center"><span class="text-lg font-semibold text-white">¿La implementación es complicada?</span><svg class="w-6 h-6 text-orange-500 transform transition-transform" :class="{'rotate-180': open === 2}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg></button><div x-show="open === 2" x-collapse class="px-6 pb-6 text-gray-400"><p>Para nada. Nuestro equipo se encarga de todo. La activación se realiza en menos de 48 horas y te ofrecemos 10 días de acompañamiento personalizado para el entrenamiento de la IA y la capacitación de tu equipo. Estarás operativo en tiempo récord.</p></div></div>
                     <!-- FAQ 3 -->
